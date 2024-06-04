@@ -9,6 +9,7 @@ export default function Home() {
   const [error, setError] = useState('')
   const [secret, setSecret] = useState('')
   const [userId, setUserId] = useState('')
+  const [isUserVerified, setIsUserVerified] = useState(false)
   const verifyUserEmail = async () => {
     try {
       if (secret === null && userId === null) {
@@ -20,6 +21,7 @@ export default function Home() {
       if (verifyUser) {
         const userVerifyConfig = await service.updateUserConfig({ userId, isUserVerified: true })
         console.log('userVerifyConfig: ', userVerifyConfig);
+        setIsUserVerified(true)
 
       }
 
@@ -51,6 +53,11 @@ export default function Home() {
   if (error !== '') {
     return <div className="text-red-500">{error}</div>
 
+  }
+  if (isUserVerified) {
+    return (
+      <div className="text-green-500 text-center text-5xl">User Verified</div>
+    )
   }
   return (
     <>
