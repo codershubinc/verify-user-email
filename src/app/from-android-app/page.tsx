@@ -30,6 +30,9 @@ export default function Home() {
     const urlParams = new URLSearchParams(window.location.search);
     const secret = String(urlParams.get('secret'));
     const userId = String(urlParams.get('userId'));
+    if (!secret || !userId) {
+      return setError('secret and userId are required')
+    }
     setSecret(secret)
     setUserId(userId)
   }, [])
