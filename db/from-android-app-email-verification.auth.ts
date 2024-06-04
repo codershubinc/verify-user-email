@@ -7,7 +7,7 @@ export class UserVerify {
     constructor() {
         this.clint
             .setEndpoint("https://cloud.appwrite.io/v1")
-            .setProject("63a0f9e4b5c0")
+            .setProject("662ab42b7d237361fa26")
         this.account = new Account(this.clint);
     }
 
@@ -25,7 +25,6 @@ export class UserVerify {
             return await this.account.updateVerification(userId, secret);
 
         } catch (error: any) {
-            console.log('verifyUserEmail error: ', error);
             throw error;
         }
     }

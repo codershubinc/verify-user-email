@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import userVerify from "../../../db/from-android-app-email-verification.auth";
+import service from "../../../db/from-android-app-user-config-update";
 
 
 
@@ -8,16 +9,19 @@ export default function Home() {
   const [error, setError] = useState('')
   const [secret, setSecret] = useState('')
   const [userId, setUserId] = useState('')
-  const verifyUserEmail = () => {
-
+  const verifyUserEmail = async () => {
     try {
-
-      if (!secret || !userId) {
+      if (secret === null && userId === null) {
         setError('secret and userId are required')
         return
       }
-      const verifyUser = userVerify.verifyUserEmail({ userId, secret })
+      const verifyUser = await userVerify.verifyUserEmail({ userId, secret })
       console.log('verifyUser: ', verifyUser);
+      if (verifyUser) {
+        const userVerifyConfig = await service.updateUserConfig({ userId, isUserVerified: true })
+        console.log('userVerifyConfig: ', userVerifyConfig);
+
+      }
 
 
 
@@ -27,19 +31,35 @@ export default function Home() {
     }
   };
   useEffect(() => {
+    console.log('window.location.search: ', window.location.search);
+
     const urlParams = new URLSearchParams(window.location.search);
     const secret = String(urlParams.get('secret'));
     const userId = String(urlParams.get('userId'));
-    if (!secret || !userId) {
-      return setError('secret and userId are required')
+    console.log('secret: ', secret, 'userId: ', userId);
+
+    if (urlParams.get('secret') === null && urlParams.get('userId') === null) {
+      console.log('secret and userId are required');
+
+      setError('secret and userId are required')
+
+
     }
     setSecret(secret)
     setUserId(userId)
   }, [])
+  if (error !== '') {
+    return <div className="text-red-500">{error}</div>
+
+  }
   return (
     <>
-      {error && <p>{error}</p>}
-      <button onClick={verifyUserEmail}>Verify User Email</button>
+      <div className="text-red-500">{error}</div>
+
+      <button
+        onClick={verifyUserEmail}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >Verify User Email</button>
     </>
   );
 }
