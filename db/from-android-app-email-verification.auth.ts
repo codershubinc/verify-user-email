@@ -7,7 +7,7 @@ export class UserVerify {
     constructor() {
         this.clint
             .setEndpoint("https://cloud.appwrite.io/v1")
-            .setProject("662ab42b7d237361fa26")
+            .setProject("setEnvs")
         this.account = new Account(this.clint);
     }
 
