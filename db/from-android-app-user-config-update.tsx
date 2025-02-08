@@ -1,9 +1,9 @@
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 const conf = {
     appwriteUrl: "https://cloud.appwrite.io/v1",
-    appwriteProjectId: "",
-    databaseId: "",
-    userConfigCollectionId: ""
+    appwriteProjectId: "ENV",
+    databaseId: "ENV",
+    userConfigCollectionId: "ENV"
     // use from env
 }
 
