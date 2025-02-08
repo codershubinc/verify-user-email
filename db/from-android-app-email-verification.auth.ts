@@ -1,4 +1,4 @@
-import { Account, Client } from "appwrite";
+vimport { Account, Client } from "appwrite";
 
 export class UserVerify {
     clint = new Client()
@@ -7,7 +7,7 @@ export class UserVerify {
     constructor() {
         this.clint
             .setEndpoint("https://cloud.appwrite.io/v1")
-            .setProject("setEnvs")
+            .setProject("ENV")
         this.account = new Account(this.clint);
     }
 
